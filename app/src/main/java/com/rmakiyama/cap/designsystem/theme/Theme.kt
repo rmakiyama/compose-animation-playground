@@ -1,4 +1,4 @@
-package com.rmakiyama.cap.ui.theme
+package com.rmakiyama.cap.designsystem.theme
 
 import android.app.Activity
 import android.os.Build

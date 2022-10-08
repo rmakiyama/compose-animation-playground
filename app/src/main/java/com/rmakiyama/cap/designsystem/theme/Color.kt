@@ -1,4 +1,4 @@
-package com.rmakiyama.cap.ui.theme
+package com.rmakiyama.cap.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
