@@ -4,11 +4,20 @@ package com.rmakiyama.cap.ui.bav
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -76,12 +85,13 @@ fun BasicAnimatedContentScreen(
             contentPadding = innerPadding,
         ) {
             sampleItem { BasicSample() }
+            sampleItem { CustomAnimationSpec() }
         }
     }
 }
 
 @Composable
-fun BasicSample() {
+private fun BasicSample() {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,6 +103,41 @@ fun BasicSample() {
         }
         Button(onClick = { count++ }) {
             Text("Add")
+        }
+    }
+}
+
+@Composable
+private fun CustomAnimationSpec() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        var count by remember { mutableStateOf(0) }
+        AnimatedContent(
+            targetState = count,
+            transitionSpec = {
+                if (targetState > initialState) {
+                    slideInHorizontally { width -> width } + fadeIn() with
+                        slideOutHorizontally { width -> -width } + fadeOut()
+                } else {
+                    slideInHorizontally { width -> -width } + fadeIn() with
+                        slideOutHorizontally { width -> width } + fadeOut()
+                }.using(
+                    SizeTransform(clip = false)
+                )
+            }
+        ) { targetCount ->
+            Text(text = "$targetCount", style = MaterialTheme.typography.displayMedium)
+        }
+        Row {
+            Button(onClick = { count++ }) {
+                Text("+")
+            }
+            Spacer(modifier = Modifier.size(24.dp))
+            Button(onClick = { count-- }) {
+                Text("-")
+            }
         }
     }
 }
