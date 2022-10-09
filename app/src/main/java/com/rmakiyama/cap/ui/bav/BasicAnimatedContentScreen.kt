@@ -3,6 +3,7 @@
 package com.rmakiyama.cap.ui.bav
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.fadeIn
@@ -86,6 +87,7 @@ fun BasicAnimatedContentScreen(
         ) {
             sampleItem { BasicSample() }
             sampleItem { CustomAnimationSpec() }
+            sampleItem { BasicCrossFade() }
         }
     }
 }
@@ -138,6 +140,22 @@ private fun CustomAnimationSpec() {
             Button(onClick = { count-- }) {
                 Text("-")
             }
+        }
+    }
+}
+
+@Composable
+private fun BasicCrossFade() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        var count by remember { mutableStateOf(0) }
+        Crossfade(targetState = count) { targetCount ->
+            Text(text = "$targetCount", style = MaterialTheme.typography.headlineMedium)
+        }
+        Button(onClick = { count++ }) {
+            Text("Add")
         }
     }
 }
