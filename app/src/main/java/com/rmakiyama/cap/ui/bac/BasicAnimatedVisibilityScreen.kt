@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.ArrowBack
@@ -46,6 +45,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.rmakiyama.cap.R
 import com.rmakiyama.cap.designsystem.component.CapTopAppBar
+import com.rmakiyama.cap.ui.extension.sampleItem
 import kotlinx.coroutines.delay
 
 @Composable
@@ -93,22 +93,6 @@ fun BasicAnimatedVisibilityScreen(
             sampleItem { FirstStep() }
             sampleItem { TryMutableTransitionState() }
             sampleItem { ChildComposableAnimation() }
-        }
-    }
-}
-
-private fun LazyListScope.sampleItem(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    item {
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(horizontal = 16.dp, vertical = 24.dp)
-        ) {
-            content()
         }
     }
 }
