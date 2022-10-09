@@ -1,12 +1,18 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package com.rmakiyama.cap.ui.bac
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -15,6 +21,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -85,6 +92,7 @@ fun BasicAnimatedVisibilityScreen(
         ) {
             sampleItem { FirstStep() }
             sampleItem { TryMutableTransitionState() }
+            sampleItem { ChildComposableAnimation() }
         }
     }
 }
@@ -157,6 +165,59 @@ private fun TryMutableTransitionState() {
                 state.isIdle && !state.currentState -> "Invisible"
                 else -> "Appearing"
             }
+        )
+    }
+}
+
+@Composable
+private fun ChildComposableAnimation() {
+    var visible by remember { mutableStateOf(true) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.Center,
+        ) {
+            this@Row.AnimatedVisibility(
+                visible = visible,
+                enter = EnterTransition.None,
+                exit = ExitTransition.None,
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(
+                        modifier = Modifier
+                            .size(60.dp)
+                            .animateEnterExit(
+                                enter = fadeIn(),
+                                exit = fadeOut(),
+                            )
+                            .background(MaterialTheme.colorScheme.onPrimaryContainer),
+                    )
+                    Text(
+                        text = "first text.",
+                        modifier = Modifier.animateEnterExit(
+                            enter = fadeIn() + slideInHorizontally(initialOffsetX = { -it }),
+                            exit = fadeOut() + slideOutHorizontally(targetOffsetX = { -it }),
+                        ),
+                    )
+                    Text(
+                        text = "second text.",
+                        modifier = Modifier.animateEnterExit(
+                            enter = fadeIn() + slideInHorizontally(initialOffsetX = { it }),
+                            exit = fadeOut() + slideOutHorizontally(targetOffsetX = { it }),
+                        ),
+                    )
+                }
+            }
+        }
+        Switch(
+            checked = visible,
+            onCheckedChange = { visible = !visible },
+            modifier = Modifier.weight(1f),
         )
     }
 }
