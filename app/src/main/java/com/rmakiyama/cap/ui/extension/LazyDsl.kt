@@ -8,17 +8,19 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 fun LazyListScope.sampleItem(
     modifier: Modifier = Modifier,
+    backgroundColor: Color? = null,
     content: @Composable () -> Unit,
 ) {
     item {
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(backgroundColor ?: MaterialTheme.colorScheme.primaryContainer)
                 .padding(horizontal = 16.dp, vertical = 24.dp)
         ) {
             content()

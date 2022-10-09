@@ -6,8 +6,10 @@ sealed class Prototype {
 
 object BasicAnimatedVisibility: Prototype()
 object BasicAnimatedContent: Prototype()
+object Progress: Prototype()
 
 val prototypes = listOf(
     BasicAnimatedVisibility,
     BasicAnimatedContent,
+    Progress,
 )
