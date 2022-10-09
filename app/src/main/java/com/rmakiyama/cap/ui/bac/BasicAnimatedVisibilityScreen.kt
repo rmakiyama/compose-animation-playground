@@ -2,20 +2,17 @@
 
 package com.rmakiyama.cap.ui.bac
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.rmakiyama.cap.R
+import com.rmakiyama.cap.designsystem.component.CapTopAppBar
 
 @Composable
 fun BasicAnimatedVisibilityRoute(
@@ -32,23 +29,24 @@ fun BasicAnimatedVisibilityScreen(
 ) {
     Scaffold(
         topBar = {
-            MediumTopAppBar(
-                title = { Text(text = stringResource(id = R.string.prototype_title_bav)) },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.TwoTone.ArrowBack,
-                            contentDescription = "back to home",
-                        )
-                    }
-                },
+            CapTopAppBar(
+                titleRes = R.string.prototype_title_bav,
+                navigationIcon = Icons.TwoTone.ArrowBack,
+                navigationIconContentDescription = "back to home",
+                onNavigationClick = onBackClick,
                 scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
             )
         }
     ) { innerPadding ->
-        Text(
-            text = stringResource(id = R.string.prototype_title_bav),
-            modifier = Modifier.padding(innerPadding)
-        )
+        Column(
+            modifier = Modifier.padding(innerPadding),
+        ) {
+            FirstStep()
+        }
     }
+}
+
+@Composable
+private fun FirstStep() {
+
 }
