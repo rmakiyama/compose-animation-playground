@@ -1,14 +1,13 @@
 package com.rmakiyama.cap.model
 
-data class Prototype(
-    val title: String,
-)
+sealed class Prototype {
+    val route: String = this.javaClass.simpleName
+}
+
+object BasicAnimatedVisibility: Prototype()
+object BasicAnimatedContent: Prototype()
 
 val prototypes = listOf(
-    Prototype(
-        title = "Basic AnimatedVisibility",
-    ),
-    Prototype(
-        title = "Basic AnimatedContent",
-    ),
+    BasicAnimatedVisibility,
+    BasicAnimatedContent,
 )

@@ -2,6 +2,7 @@
 
 package com.rmakiyama.cap.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -21,15 +22,21 @@ import androidx.compose.ui.unit.dp
 import com.rmakiyama.cap.R
 import com.rmakiyama.cap.designsystem.theme.CapTheme
 import com.rmakiyama.cap.model.Prototype
+import com.rmakiyama.cap.ui.extension.title
 
 @Composable
-fun HomeRoute() {
-    HomeScreen()
+fun HomeRoute(
+    navigateToPrototype: (Prototype) -> Unit,
+) {
+    HomeScreen(
+        navigateToPrototype = navigateToPrototype,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    navigateToPrototype: (Prototype) -> Unit,
     prototypes: List<Prototype> = com.rmakiyama.cap.model.prototypes,
 ) {
     Scaffold(
@@ -43,14 +50,17 @@ fun HomeScreen(
             verticalArrangement = spacedBy(16.dp),
         ) {
             items(prototypes, key = { prototype -> prototype.title }) { prototype ->
-                PrototypeItem(prototype = prototype)
+                PrototypeItem(
+                    modifier = Modifier.clickable { navigateToPrototype(prototype) },
+                    prototype = prototype,
+                )
             }
         }
     }
 }
 
 @Composable
-fun HomeTopAppBar() {
+private fun HomeTopAppBar() {
     MediumTopAppBar(
         title = { Text(text = stringResource(id = R.string.title_home)) },
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
@@ -61,6 +71,8 @@ fun HomeTopAppBar() {
 @Composable
 private fun HomeScreenPreview() {
     CapTheme {
-        HomeScreen()
+        HomeScreen(
+            navigateToPrototype = {},
+        )
     }
 }

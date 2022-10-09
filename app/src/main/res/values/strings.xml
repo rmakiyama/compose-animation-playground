@@ -2,4 +2,7 @@
     <string name="app_name">compose-animation-playground</string>
 
     <string name="title_home">Home</string>
+
+    <string name="prototype_title_bav">Basic AnimatedVisibility</string>
+    <string name="prototype_title_bac">Basic AnimatedContent</string>
 </resources>

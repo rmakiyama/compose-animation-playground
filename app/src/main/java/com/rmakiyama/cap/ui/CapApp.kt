@@ -7,9 +7,11 @@ import com.rmakiyama.cap.navigation.CapNavHost
 
 @Composable
 fun CapApp() {
+    val navController = rememberNavController()
     CapTheme {
         CapNavHost(
-            navController = rememberNavController()
+            navController = navController,
+            onBackClick = { navController.popBackStack() },
         )
     }
 }
