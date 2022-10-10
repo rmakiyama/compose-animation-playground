@@ -50,6 +50,9 @@ fun ProgressScreen(
             sampleItem(backgroundColor = sampleBackgroundColor) {
                 FlickrLikeProgress()
             }
+            sampleItem(backgroundColor = sampleBackgroundColor) {
+                FourDotScaleProgress()
+            }
         }
     }
 }
