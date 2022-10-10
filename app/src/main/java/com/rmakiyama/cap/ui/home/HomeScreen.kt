@@ -2,7 +2,6 @@
 
 package com.rmakiyama.cap.ui.home
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -51,8 +50,8 @@ fun HomeScreen(
         ) {
             items(prototypes, key = { prototype -> prototype.title }) { prototype ->
                 PrototypeItem(
-                    modifier = Modifier.clickable { navigateToPrototype(prototype) },
                     prototype = prototype,
+                    onPrototypeClick = { navigateToPrototype(prototype) },
                 )
             }
         }
