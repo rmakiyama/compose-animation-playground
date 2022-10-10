@@ -56,6 +56,9 @@ fun ProgressScreen(
             sampleItem(backgroundColor = sampleBackgroundColor) {
                 SquareScaleProgress()
             }
+            sampleItem(backgroundColor = sampleBackgroundColor) {
+                SquareFlipProgress()
+            }
         }
     }
 }

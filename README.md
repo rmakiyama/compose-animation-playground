@@ -9,4 +9,4 @@ This is a repository for prototyping with Compose animations.
 - Basic AnimatedContent
   - `AnimatedContent`, `Crossfade`
 - Progress Prototypes
-  - `animateDpAsState`, `InfiniteTransition`
+  - `animateDpAsState`, `InfiniteTransition`, `graphicsLayer`
