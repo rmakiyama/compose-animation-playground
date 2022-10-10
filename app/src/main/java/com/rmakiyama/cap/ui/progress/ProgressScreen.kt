@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.rmakiyama.cap.R
@@ -69,46 +70,3 @@ fun ProgressScreen(
         }
     }
 }
-
-@Composable
-private fun FlickrLikeProgress() {
-    @Composable
-    fun Circle(color: Color, modifier: Modifier = Modifier) {
-        Box(
-            modifier = modifier
-                .size(60.dp)
-                .clip(CircleShape)
-                .background(color),
-        )
-    }
-
-    var reversed by remember { mutableStateOf(false) }
-    val offset by animateDpAsState(
-        targetValue = if (reversed) 60.dp else 0.dp,
-        animationSpec = tween(durationMillis = 600, easing = LinearEasing),
-        finishedListener = { reversed = !reversed }
-    )
-
-    LaunchedEffect(Unit) {
-        reversed = true
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Circle(
-            color = Color.Red,
-            modifier = Modifier
-                .offset(x = offset)
-                .zIndex(if (reversed) -1f else 1f),
-        )
-        Circle(
-            color = Color.Blue,
-            modifier = Modifier
-                .offset(x = -offset)
-                .zIndex(if (reversed) 1f else -1f),
-        )
-    }
-}
-
