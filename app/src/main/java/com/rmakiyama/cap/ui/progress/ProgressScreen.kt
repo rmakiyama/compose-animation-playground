@@ -53,6 +53,9 @@ fun ProgressScreen(
             sampleItem(backgroundColor = sampleBackgroundColor) {
                 FourDotScaleProgress()
             }
+            sampleItem(backgroundColor = sampleBackgroundColor) {
+                SquareScaleProgress()
+            }
         }
     }
 }
