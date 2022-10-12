@@ -6,4 +6,5 @@
     <string name="prototype_title_bav">Basic AnimatedVisibility</string>
     <string name="prototype_title_bac">Basic AnimatedContent</string>
     <string name="prototype_title_progress">Progress</string>
+    <string name="prototype_title_playing_cards">Playing Cards</string>
 </resources>
