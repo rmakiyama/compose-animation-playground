@@ -1,7 +1,11 @@
 package com.rmakiyama.cap.ui.playingcards
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
@@ -12,6 +16,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.rmakiyama.cap.ui.playingcards.model.Card
 import com.rmakiyama.cap.ui.playingcards.model.PlayingCards
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 
 @Composable
 fun Hands(
@@ -19,6 +25,31 @@ fun Hands(
     modifier: Modifier = Modifier,
     cardWidth: Dp = DefaultCardWidth,
 ) {
+    val animatedRotationZValues = buildList {
+        repeat(cards.size) { index ->
+            val animatedRotationZ = remember { Animatable(0f) }
+            add(animatedRotationZ)
+        }
+    }
+
+    LaunchedEffect(cards) {
+        awaitAll(
+            *animatedRotationZValues.mapIndexed { index, animatable ->
+                async {
+                    animatable.animateTo(
+                        targetValue = calculateRotationZ(
+                            cardsSize = cards.size,
+                            index = index,
+                        ),
+                        animationSpec = spring(
+                            stiffness = Spring.StiffnessLow,
+                        )
+                    )
+                }
+            }.toTypedArray()
+        )
+    }
+
     Layout(
         modifier = modifier.wrapContentSize(),
         content = {
@@ -47,10 +78,7 @@ fun Hands(
                         transformOrigin = TransformOrigin(
                             transformPivotFractionX, 1f,
                         )
-                        rotationZ = calculateRotationZ(
-                            cardsSize = cards.size,
-                            index = index,
-                        )
+                        rotationZ = animatedRotationZValues[index].value
                     }
                 )
             }
