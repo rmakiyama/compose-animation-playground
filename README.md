@@ -10,3 +10,5 @@ This is a repository for prototyping with Compose animations.
   - `AnimatedContent`, `Crossfade`
 - Progress Prototypes
   - `animateDpAsState`, `InfiniteTransition`, `graphicsLayer`
+- Playing Cards
+  - `Animatable`, `Layout`
