@@ -7,9 +7,11 @@ sealed class Prototype {
 object BasicAnimatedVisibility: Prototype()
 object BasicAnimatedContent: Prototype()
 object Progress: Prototype()
+object PlayingCards: Prototype()
 
 val prototypes = listOf(
     BasicAnimatedVisibility,
     BasicAnimatedContent,
     Progress,
+    PlayingCards,
 )
