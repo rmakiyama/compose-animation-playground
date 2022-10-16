@@ -10,9 +10,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.rmakiyama.cap.R
 import com.rmakiyama.cap.designsystem.component.CapTopAppBar
+import com.rmakiyama.cap.ui.playingcards.model.PlayingCards
 
 @Composable
 fun PlayingCardsRoute(
@@ -35,12 +37,25 @@ fun PlayingCardsScreen(
             )
         }
     ) { innerPadding ->
+
+        val playingCards = remember {
+            PlayingCards.build().apply { shuffle() }
+        }
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            // TODO
+            Hands(
+                cards = listOf(
+                    playingCards.draw(),
+                    playingCards.draw(),
+                    playingCards.draw(),
+                    playingCards.draw(),
+                    playingCards.draw(),
+                )
+            )
         }
     }
 }
