@@ -1,15 +1,15 @@
 package com.rmakiyama.cap.ui.playingcards
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.rmakiyama.cap.ui.playingcards.model.Card
 import com.rmakiyama.cap.ui.playingcards.model.PlayingCards
 
@@ -17,16 +17,13 @@ import com.rmakiyama.cap.ui.playingcards.model.PlayingCards
 fun Hands(
     cards: List<Card>,
     modifier: Modifier = Modifier,
+    cardWidth: Dp = DefaultCardWidth,
 ) {
     Layout(
-        modifier = modifier
-            .wrapContentSize()
-            .background(Color.Green),
+        modifier = modifier.wrapContentSize(),
         content = {
             cards.forEach { card ->
-                Card(
-                    card = card
-                )
+                Card(card = card, width = cardWidth)
             }
         }
     ) { measurables, constraints ->
@@ -35,17 +32,20 @@ fun Hands(
             it.measure(constraints)
         }
 
+        // TODO: calculate width and height.
+
+        val card = placeables.first()
         layout(
-            width = constraints.maxWidth,
-            height = constraints.maxHeight,
+            width = card.measuredWidth,
+            height = card.measuredHeight,
         ) {
             placeables.forEachIndexed { index, placeable ->
-                val positionX = constraints.maxWidth / 2 - placeable.width / 2
+
                 placeable.placeRelativeWithLayer(
-                    position = IntOffset(positionX, 0),
+                    position = IntOffset.Zero,
                     layerBlock = {
                         transformOrigin = TransformOrigin(
-                            0.4f, 1f,
+                            transformPivotFractionX, 1f,
                         )
                         rotationZ = calculateRotationZ(
                             cardsSize = cards.size,
@@ -67,6 +67,8 @@ private fun calculateRotationZ(
     return leastRotationZ + rotationDiff * index
 }
 
+private val DefaultCardWidth = 128.dp
+private const val transformPivotFractionX = 0.4f
 private const val rotationDiff = 15f
 
 @Preview
@@ -76,11 +78,6 @@ private fun HandsPreview() {
         PlayingCards.build().apply { shuffle() }
     }
     val cards = listOf(
-        playingCards.draw(),
-        playingCards.draw(),
-        playingCards.draw(),
-        playingCards.draw(),
-        playingCards.draw(),
         playingCards.draw(),
         playingCards.draw(),
         playingCards.draw(),
