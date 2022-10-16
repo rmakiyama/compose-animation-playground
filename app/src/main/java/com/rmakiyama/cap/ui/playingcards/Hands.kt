@@ -36,6 +36,7 @@ fun Hands(
         awaitAll(
             *animatedRotationZValues.mapIndexed { index, animatable ->
                 async {
+                    animatable.animateTo(0f)
                     animatable.animateTo(
                         targetValue = calculateRotationZ(
                             cardsSize = cards.size,
