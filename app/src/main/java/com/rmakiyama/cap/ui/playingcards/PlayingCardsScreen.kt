@@ -48,13 +48,7 @@ fun PlayingCardsScreen(
                 .padding(innerPadding),
         ) {
             Hands(
-                cards = listOf(
-                    playingCards.draw(),
-                    playingCards.draw(),
-                    playingCards.draw(),
-                    playingCards.draw(),
-                    playingCards.draw(),
-                )
+                cards = playingCards.draw(5),
             )
         }
     }

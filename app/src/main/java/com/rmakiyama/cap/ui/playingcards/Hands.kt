@@ -77,10 +77,6 @@ private fun HandsPreview() {
     val playingCards = remember {
         PlayingCards.build().apply { shuffle() }
     }
-    val cards = listOf(
-        playingCards.draw(),
-        playingCards.draw(),
-        playingCards.draw(),
-    )
+    val cards = playingCards.draw(5)
     Hands(cards = cards)
 }

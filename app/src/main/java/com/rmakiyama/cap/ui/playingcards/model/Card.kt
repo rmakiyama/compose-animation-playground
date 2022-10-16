@@ -42,6 +42,15 @@ class PlayingCards(
         return innerList.removeAt(0)
     }
 
+    fun draw(count: Int): List<Card> {
+        require(innerList.isNotEmpty())
+        return buildList {
+            repeat(count) {
+                add(innerList.removeAt(0))
+            }
+        }
+    }
+
     companion object {
         fun build(withJoker: Boolean = true): PlayingCards {
             val cards: MutableList<Card> = CardSuit.values().map { suit ->
