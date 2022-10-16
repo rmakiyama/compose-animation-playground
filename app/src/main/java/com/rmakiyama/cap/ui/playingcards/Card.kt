@@ -11,6 +11,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
@@ -28,8 +29,14 @@ fun Card(
     width: Dp = DefaultCardWidth,
 ) {
     when (card) {
-        Card.Joker -> JokerCard(
+        Card.JokerA -> JokerCard(
             modifier = modifier,
+            suit = "🧞‍♀️",
+            width = width,
+        )
+        Card.JokerB -> JokerCard(
+            modifier = modifier,
+            suit = "🧞‍♂️",
             width = width,
         )
         is Card.Number -> NumberCard(
@@ -74,7 +81,11 @@ private fun NumberAndSuit(
         modifier = modifier.padding(8.dp),
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = card.number.value, fontWeight = FontWeight.Black)
+        Text(
+            text = card.number.value,
+            modifier = Modifier.align(CenterHorizontally),
+            fontWeight = FontWeight.Black
+        )
         Text(text = card.suit.value)
     }
 }
@@ -82,6 +93,7 @@ private fun NumberAndSuit(
 @Composable
 private fun JokerCard(
     modifier: Modifier = Modifier,
+    suit: String = "🧞‍",
     width: Dp = DefaultCardWidth,
 ) {
     OutlinedCard(
@@ -93,9 +105,9 @@ private fun JokerCard(
                 .aspectRatio(ratio = CardRatio)
                 .padding(8.dp),
         ) {
-            Text(text = "🧞‍")
+            Text(text = suit)
             Text(
-                text = "🧞‍",
+                text = suit,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .rotate(180f),
@@ -111,7 +123,7 @@ private const val CardRatio = 0.64f
 @Composable
 private fun NumberCardPreview() {
     val card = Card.Number(
-        number = CardNumber.TEN,
+        number = CardNumber.EIGHT,
         suit = CardSuit.HEARTS,
     )
     NumberCard(card = card)
