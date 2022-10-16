@@ -25,5 +25,30 @@ enum class CardSuit(val value: String) {
 
 sealed class Card {
     data class Number(val number: CardNumber, val suit: CardSuit) : Card()
-    object Joker : Card()
+    object JokerA : Card()
+    object JokerB : Card()
+}
+
+class PlayingCards(
+    private val innerList: MutableList<Card>,
+) : List<Card> by innerList {
+
+    fun shuffle() {
+        innerList.shuffle()
+    }
+
+    fun draw(): Card {
+        require(innerList.isNotEmpty())
+        return innerList.removeAt(0)
+    }
+
+    companion object {
+        fun build(withJoker: Boolean = true): PlayingCards {
+            val cards: MutableList<Card> = CardSuit.values().map { suit ->
+                CardNumber.values().map { number -> Card.Number(number, suit) }
+            }.flatten().toMutableList()
+            if (withJoker) cards.addAll(listOf(Card.JokerA, Card.JokerB))
+            return PlayingCards(cards)
+        }
+    }
 }
