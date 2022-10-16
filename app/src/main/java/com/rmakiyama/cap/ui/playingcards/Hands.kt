@@ -65,7 +65,10 @@ fun Hands(
         modifier = modifier.wrapContentSize(),
         content = {
             cards.forEach { card ->
-                Crossfade(targetState = card) {
+                Crossfade(
+                    targetState = card,
+                    animationSpec = spring(stiffness = Spring.StiffnessLow),
+                ) {
                     Card(card = it, width = cardWidth)
                 }
             }
