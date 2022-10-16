@@ -1,5 +1,9 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.rmakiyama.cap.ui.playingcards
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -26,7 +30,7 @@ fun Hands(
     cardWidth: Dp = DefaultCardWidth,
 ) {
     val animatedRotationZValues = buildList {
-        repeat(cards.size) { index ->
+        repeat(cards.size) {
             val animatedRotationZ = remember { Animatable(0f) }
             add(animatedRotationZ)
         }
@@ -34,9 +38,15 @@ fun Hands(
 
     LaunchedEffect(cards) {
         awaitAll(
-            *animatedRotationZValues.mapIndexed { index, animatable ->
+            *animatedRotationZValues.map { animatable ->
                 async {
                     animatable.animateTo(0f)
+                }
+            }.toTypedArray()
+        )
+        awaitAll(
+            *animatedRotationZValues.mapIndexed { index, animatable ->
+                async {
                     animatable.animateTo(
                         targetValue = calculateRotationZ(
                             cardsSize = cards.size,
@@ -55,7 +65,9 @@ fun Hands(
         modifier = modifier.wrapContentSize(),
         content = {
             cards.forEach { card ->
-                Card(card = card, width = cardWidth)
+                Crossfade(targetState = card) {
+                    Card(card = it, width = cardWidth)
+                }
             }
         }
     ) { measurables, constraints ->

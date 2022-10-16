@@ -27,6 +27,7 @@ import com.rmakiyama.cap.R
 import com.rmakiyama.cap.designsystem.component.CapTopAppBar
 import com.rmakiyama.cap.ui.playingcards.model.Card
 import com.rmakiyama.cap.ui.playingcards.model.PlayingCards
+import kotlin.random.Random
 
 @Composable
 fun PlayingCardsRoute(
@@ -76,5 +77,6 @@ fun PlayingCardsScreen(
 
 // for sample
 private fun getNewHands(): List<Card> {
-    return PlayingCards.build().apply { shuffle() }.draw(5)
+    val count = Random.nextInt(2, 10)
+    return PlayingCards.build().apply { shuffle() }.draw(count)
 }
